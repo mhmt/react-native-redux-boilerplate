@@ -16,6 +16,9 @@ import * as Actions from '../actions';
 
     componentDidMount() {
         this.props.getData(); 
+        //this.props.addData({YOUR DATA})
+        //this.props.updateData(index,{UPDATED DATA})
+        //this.props.deleteData(index)
     }
 
 render() {
