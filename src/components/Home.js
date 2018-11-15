@@ -3,7 +3,7 @@ import { Text, View,  StyleSheet, FlatList, ActivityIndicator} from 'react-nativ
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 
-import * as Actions from '../actions';
+import * as Actions from '../redux/actions';
  class Home extends Component {
     constructor(props) {
         super(props);
