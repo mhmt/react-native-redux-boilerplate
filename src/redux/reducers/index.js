@@ -22,26 +22,21 @@ const dataReducer = (state=dataState,action) =>{
         break;    
 
         case ADD_DATA:
-            var nextState = state.data;
-            nextState.unshift(action.added);
-            return Object.assign({},state,nextState);
-         break;  
+            return Object.assign({},state,{data:[action.added,...state.data]});
+        break;  
 
 
         case UPDATE_DATA:
-            var nextState = state.data;
-            nextState[action.index] = action.updated;
-            return Object.assign({},state,nextState);
-            break;  
-
+            return Object.assign({},state,{data:state.data.map((each,index)=>{
+                if(index == action.index) return Object.assign({},each,action.updated)
+                return each
+            })});
+        
 
         case DELETE_DATA:
-            var nextState = state.data;
-            nextState.splice(action.index,1);
-            return Object.assign({},state,nextState);
-        break;  
-    
-
+            return Object.assign({},state,{
+                data:state.data.filter(data => data !== state.data[action.index])
+            });
         default:
             return state;
     }
