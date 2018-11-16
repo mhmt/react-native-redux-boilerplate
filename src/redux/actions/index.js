@@ -1,76 +1,37 @@
-import Data from '../sampleData.json';
 import { 
     DATA_READY,
     ADD_DATA,
     UPDATE_DATA,
-    DELETE_DATA
+    DELETE_DATA,
+    DATA_READ_FROM_FILE
 } from './types'
-import {AsyncStorage} from "react-native";
 
+export const readData = (data)=> {
+    return ( dispatch) => {
+        dispatch({type:DATA_READ_FROM_FILE,data})
+    };
+}
 
 export function getData(){
-    return (dispatch) => {
-        init = Data.instructions
-        AsyncStorage.getItem("data",(err,data)=>{
-            if(data !== null){
-                data = JSON.parse(data)
-                dispatch({type:DATA_READY,data})
-            }else{
-                AsyncStorage.setItem("data",JSON.stringify(init),()=>{
-                    dispatch({type:DATA_READY,data:init})
-
-                })
-            }
-        })
-
- 
+    return ( dispatch) => {
+        dispatch({type:DATA_READY})
     };
 }
 
 export function addData(mdata){
     return (dispatch) => {
-        AsyncStorage.getItem('data', (err, data) => {
-            if (data !== null){
-                data = JSON.parse(data);
-                data.unshift(mdata); //add the new quote to the top
-                AsyncStorage.setItem('data', JSON.stringify(data), () => {
-                    dispatch({type: ADD_DATA, data});
-                });
-            }else{
-                let initial = new Array()
-                initial.push(mdata)
-                AsyncStorage.setItem('data', JSON.stringify(initial), () => {
-                    dispatch({type: ADD_DATA, data:initial});
-                });
-            }
-        });
+        dispatch({type: ADD_DATA,added: mdata});
     };
 }
 
 export function updateData(index,Mdata){
     return (dispatch)=>{
-        AsyncStorage.getItem('data', (err, data) => {
-            if (data !== null){
-                data = JSON.parse(data);
-                data[index] = Mdata;
-                AsyncStorage.setItem('data', JSON.stringify(data), () => {
-                    dispatch({type: UPDATE_DATA, data});
-                });
-            }
-        });
+        dispatch({type: UPDATE_DATA,index,updated:Mdata});
     }
 }
 
 export function deleteData(index){
     return (dispatch)=>{
-        AsyncStorage.getItem('data', (err, data) => {
-            if (data !== null){
-                data = JSON.parse(data);
-                data.splice(index,1);
-                AsyncStorage.setItem('data', JSON.stringify(data), () => {
-                    dispatch({type: DELETE_DATA, data});
-                });
-            }
-        });
+        dispatch({type: DELETE_DATA, index});
     }
 }

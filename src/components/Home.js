@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import { Text, View,  StyleSheet, FlatList, ActivityIndicator} from 'react-native'
+import { Text, View,  StyleSheet, FlatList, ActivityIndicator,AsyncStorage} from 'react-native'
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
-
 import * as Actions from '../redux/actions';
  class Home extends Component {
     constructor(props) {
@@ -15,10 +14,17 @@ import * as Actions from '../redux/actions';
     }
 
     componentDidMount() {
-        this.props.getData(); 
-        //this.props.addData({YOUR DATA})
-        //this.props.updateData(index,{UPDATED DATA})
-        //this.props.deleteData(index)
+        AsyncStorage.getItem("data",(err,data)=>{
+            if(data !== null){
+                data = JSON.parse(data)
+                this.props.readData(data) // This reads data from localStorage and sets as state.data
+            }else this.props.readData(null);
+        })
+
+      //  this.props.getData();  //This gets data from static file.
+      //  this.props.addData({title:"asdfasdfasd",description:"sdfasdfadsafasdfnlas"})
+      //  this.props.updateData(2,{title:"asdfasdfasd UPDATED",description:"sdfasdfadsafasdfnlas"})
+      //  this.props.deleteData(1)
     }
 
 render() {
