@@ -14,17 +14,17 @@ import * as Actions from '../redux/actions';
     }
 
     componentDidMount() {
-        AsyncStorage.getItem("data",(err,data)=>{
+        /* AsyncStorage.getItem("data",(err,data)=>{
             if(data !== null){
                 data = JSON.parse(data)
                 this.props.readData(data) // This reads data from localStorage and sets as state.data
             }else this.props.readData(null);
-        })
+        }) */
 
-      //  this.props.getData();  //This gets data from static file.
-      //  this.props.addData({title:"asdfasdfasd",description:"sdfasdfadsafasdfnlas"})
-      //  this.props.updateData(2,{title:"asdfasdfasd UPDATED",description:"sdfasdfadsafasdfnlas"})
-      //  this.props.deleteData(1)
+        this.props.getData();  //This gets data from static file.
+       // this.props.addData({title:"asdfasdfasd",description:"sdfasdfadsafasdfnlas"})
+       // this.props.updateData(2,{title:"asdfasdfasd UPDATED",description:"sdfasdfadsafasdfnlas"})
+       // this.props.deleteData(1)
     }
 
 render() {
