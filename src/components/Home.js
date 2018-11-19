@@ -16,7 +16,7 @@ import * as Actions from '../redux/actions';
 
     componentDidMount() {
        
-        this.props.FetchData();
+        this.props.FetchData();  // This gets data via Axios
        // this.props.getData();  //This gets data from static file.
        // this.props.addData({title:"asdfasdfasd",description:"sdfasdfadsafasdfnlas"})
        // this.props.updateData(2,{title:"asdfasdfasd UPDATED",description:"sdfasdfadsafasdfnlas"})
@@ -35,8 +35,8 @@ render() {
                 <View style={{flex:1, backgroundColor: '#F5F5F5', paddingTop:20}}>
                     <FlatList
                         ref='listRef'
-                        data={this.props.people}
-                        renderItem={this.renderPeople}
+                        data={this.props.people} // use this.props.data for read from static file
+                        renderItem={this.renderPeople}  //use this.renderItem for static file
                         keyExtractor={(item, index) => index}/>
                 </View>
             );
@@ -61,11 +61,7 @@ render() {
            
             <TouchableOpacity style={styles.rowPeople} 
             onPress={()=>{
-                //this.props.navigation.navigate("Edit",{title:item.title,description:item.description,index,edit:true})
-            }}
-            
-            onLongPress={()=>{
-               // this.props.deleteData(index);
+
             }}>
             <Image source={{uri:item.picture.medium}} style={{height:60,width:60}}/>
             <View style={{marginHorizontal:10}}>
@@ -106,7 +102,7 @@ const styles = StyleSheet.create({
 
     title:{
         fontSize: 15,
-        fontWeight: "600"
+        fontWeight: "700"
     },
 
     description:{
@@ -123,14 +119,10 @@ function mapStateToProps(state, props) {
     }
 }
 
-// Doing this merges our actions into the component’s props,
-// while wrapping them in dispatch() so that they immediately dispatch an Action.
-// Just by doing this, we will have access to the actions defined in out actions file (action/home.js)
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(Actions, dispatch);
 }
 
-//Connect everything
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
 
 
