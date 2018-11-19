@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View,  StyleSheet, FlatList, ActivityIndicator,AsyncStorage} from 'react-native'
+import { Text, View,  StyleSheet, FlatList, ActivityIndicator,TouchableOpacity,Image} from 'react-native'
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import * as Actions from '../redux/actions';
@@ -11,17 +11,13 @@ import * as Actions from '../redux/actions';
         };
 
         this.renderItem = this.renderItem.bind(this);
+        this.renderPeople = this.renderPeople.bind(this);
     }
 
     componentDidMount() {
-        /* AsyncStorage.getItem("data",(err,data)=>{
-            if(data !== null){
-                data = JSON.parse(data)
-                this.props.readData(data) // This reads data from localStorage and sets as state.data
-            }else this.props.readData(null);
-        }) */
-
-        this.props.getData();  //This gets data from static file.
+       
+        this.props.FetchData();
+       // this.props.getData();  //This gets data from static file.
        // this.props.addData({title:"asdfasdfasd",description:"sdfasdfadsafasdfnlas"})
        // this.props.updateData(2,{title:"asdfasdfasd UPDATED",description:"sdfasdfadsafasdfnlas"})
        // this.props.deleteData(1)
@@ -39,8 +35,8 @@ render() {
                 <View style={{flex:1, backgroundColor: '#F5F5F5', paddingTop:20}}>
                     <FlatList
                         ref='listRef'
-                        data={this.props.data}
-                        renderItem={this.renderItem}
+                        data={this.props.people}
+                        renderItem={this.renderPeople}
                         keyExtractor={(item, index) => index}/>
                 </View>
             );
@@ -60,6 +56,31 @@ render() {
         )
     }
 
+    renderPeople({item, index}) {
+        return (
+           
+            <TouchableOpacity style={styles.rowPeople} 
+            onPress={()=>{
+                //this.props.navigation.navigate("Edit",{title:item.title,description:item.description,index,edit:true})
+            }}
+            
+            onLongPress={()=>{
+               // this.props.deleteData(index);
+            }}>
+            <Image source={{uri:item.picture.medium}} style={{height:60,width:60}}/>
+            <View style={{marginHorizontal:10}}>
+                <Text style={styles.title}>
+                    {item.name.first} {item.name.last}
+                </Text>
+                <Text style={styles.description}>
+                    {item.email}
+                </Text>
+            </View>
+           
+        </TouchableOpacity>
+        )
+    }
+
 }
 
 const styles = StyleSheet.create({
@@ -71,6 +92,13 @@ const styles = StyleSheet.create({
     },
 
     row:{
+        borderBottomWidth: 1,
+        borderColor: "#ccc",
+        padding: 10
+    },
+
+    rowPeople:{
+        flexDirection:'row',
         borderBottomWidth: 1,
         borderColor: "#ccc",
         padding: 10
@@ -90,7 +118,8 @@ const styles = StyleSheet.create({
 function mapStateToProps(state, props) {
     return {
         loading: state.dataReducer.loading,
-        data: state.dataReducer.data
+        data: state.dataReducer.data,
+        people:state.dataReducer.people
     }
 }
 
