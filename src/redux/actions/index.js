@@ -1,67 +1,52 @@
 import Axios from 'axios'
-import { 
-    DATA_READY,
-    ADD_DATA,
-    UPDATE_DATA,
-    DELETE_DATA,
-    DATA_READ_FROM_FILE,
-    FETCH_START,
-    FETCH_DONE,
-    FETCH_ERROR
-} from './types'
+import * as actions from './types'
 
 export const readData = (data)=> {
     return ( dispatch) => {
-        dispatch({type:DATA_READ_FROM_FILE,data})
+        dispatch({type:actions.DATA_READ_FROM_FILE,data})
     };
 }
 
 export function getData(){
     return ( dispatch) => {
-        dispatch({type:DATA_READY})
+        dispatch({type:actions.DATA_READY})
     };
 }
 
-export function addData(mdata){
+export function addData(mData){
     return (dispatch) => {
-        dispatch({type: ADD_DATA,added: mdata});
+        dispatch({type: actions.ADD_DATA,added: mData});
     };
 }
 
-export function updateData(index,Mdata){
+export function updateData(index,mData){
     return (dispatch)=>{
-        dispatch({type: UPDATE_DATA,index,updated:Mdata});
+        dispatch({type: actions.UPDATE_DATA,index,updated:mData});
     }
 }
 
 export function deleteData(index){
     return (dispatch)=>{
-        dispatch({type: DELETE_DATA, index});
+        dispatch({type: actions.DELETE_DATA, index});
     }
 }
 
 export const startFetch = () =>{
-    console.log("Fetch Started")
-
     return {
-        type: FETCH_START
+        type: actions.FETCH_START
     }
 }
 
 export const doneFetch = (data) =>{
-    console.log("Fetch Done. Data: "+data)
-
     return {
-        type: FETCH_DONE,
+        type: actions.FETCH_DONE,
         data
     }
 }
 
 export const errorFetch = (error) =>{
-    console.log("Fetch Error: "+error)
-
     return {
-        type: FETCH_ERROR,
+        type: actions.FETCH_ERROR,
         error
     }
 }
@@ -69,12 +54,13 @@ export const errorFetch = (error) =>{
 export const FetchData = ()=>{
     let apiURL = "https://randomuser.me/api?results=15"
     return (dispatch)=>{
-        dispatch(startFetch())
-        Axios.get(apiURL).then((res)=>{
-            let response = (res.data.results);
-            dispatch(doneFetch(response));
-        }).catch((err)=>{
-            dispatch(errorFetch(err))
+        dispatch({
+            type:actions.FETCH_PEOPLE,
+            payload:{
+                url: apiURL,
+                done:doneFetch,
+                error:errorFetch
+            }
         })
         
     }
