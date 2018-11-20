@@ -12,8 +12,8 @@ import {
 } from '../actions/types'
 import {List} from 'immutable'
 
-
-let dataState={data:InitialData.instructions,loading:true}
+let dataState={data:[],loading:true}
+let peopleState={people:[],loading:true}
 
 const dataReducer = (state=dataState,action) =>{
     switch(action.type){
@@ -21,17 +21,24 @@ const dataReducer = (state=dataState,action) =>{
             return Object.assign({},state,{data:action.data !== null ? action.data:state.data,loading:false});
 
         case DATA_READY:
-            return Object.assign({},state,{loading:false});
-   
-        case ADD_DATA:
-            return Object.assign({},state,{data:List(state.data).insert(0,action.added).toArray()});
+            return Object.assign({},state,{data:InitialData.instructions ,loading:false});
 
+        case ADD_DATA:
+            return Object.assign({},state,{data:List(state.data).unshift(action.added).toArray()});
+        
         case UPDATE_DATA:
             return Object.assign({},state,{data: List(state.data).set(action.index,action.updated).toArray()});
         
         case DELETE_DATA:
             return Object.assign({},state,{data:List(state.data).delete(action.index).toArray()});
         
+        default:
+            return state;
+    }
+}
+
+const peopleReducer = (state=peopleState,action)=>{
+    switch(action.type){
         case FETCH_START:
             return Object.assign({},state,{loading:true});
 
@@ -39,7 +46,7 @@ const dataReducer = (state=dataState,action) =>{
             return Object.assign({},state,{people:action.data ,loading:false});
 
         case FETCH_ERROR:
-            return Object.assign({},state,{loading:false});
+            return Object.assign({},state,{loading:false,error});
             
         default:
             return state;
@@ -48,7 +55,7 @@ const dataReducer = (state=dataState,action) =>{
 
 
 const rootReducer = combineReducers({
-    dataReducer
+    data:dataReducer,people:peopleReducer
 })
- 
+
 export default rootReducer;

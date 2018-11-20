@@ -15,7 +15,6 @@ import * as Actions from '../redux/actions';
     }
 
     componentDidMount() {
-       
         this.props.FetchData();  // This gets data via Axios
        // this.props.getData();  //This gets data from static file.
        // this.props.addData({title:"asdfasdfasd",description:"sdfasdfadsafasdfnlas"})
@@ -59,7 +58,7 @@ render() {
     renderPeople({item, index}) {
         return (
            
-            <TouchableOpacity style={styles.rowPeople} 
+        <TouchableOpacity style={styles.rowPeople} 
             onPress={()=>{
 
             }}>
@@ -113,9 +112,9 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state, props) {
     return {
-        loading: state.dataReducer.loading,
-        data: state.dataReducer.data,
-        people:state.dataReducer.people
+        loading: state.people.loading,
+        data: state.data.data,
+        people:state.people.people
     }
 }
 
