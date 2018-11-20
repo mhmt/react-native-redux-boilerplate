@@ -7,3 +7,4 @@ export const DELETE_DATA="DELETE_DATA";
 export const FETCH_START="FETCH_STARTED";
 export const FETCH_DONE="FETCH_DONE";
 export const FETCH_ERROR="FETCH_ERROR";
+export const FETCH_PEOPLE="FETCH_PEOPLE";

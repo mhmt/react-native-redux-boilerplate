@@ -1,15 +1,6 @@
 import {combineReducers} from 'redux'
 import InitialData from '../sampleData.json'
-import {
-    DATA_READY,
-    DATA_READ_FROM_FILE,
-    ADD_DATA,
-    UPDATE_DATA,
-    DELETE_DATA,
-    FETCH_START,
-    FETCH_DONE,
-    FETCH_ERROR
-} from '../actions/types'
+import * as actions from '../actions/types'
 import {List} from 'immutable'
 
 let dataState={data:[],loading:true}
@@ -17,19 +8,19 @@ let peopleState={people:[],loading:true}
 
 const dataReducer = (state=dataState,action) =>{
     switch(action.type){
-        case DATA_READ_FROM_FILE:
+        case actions.DATA_READ_FROM_FILE:
             return Object.assign({},state,{data:action.data !== null ? action.data:state.data,loading:false});
 
-        case DATA_READY:
+        case actions.DATA_READY:
             return Object.assign({},state,{data:InitialData.instructions ,loading:false});
 
-        case ADD_DATA:
+        case actions.ADD_DATA:
             return Object.assign({},state,{data:List(state.data).unshift(action.added).toArray()});
         
-        case UPDATE_DATA:
+        case actions.UPDATE_DATA:
             return Object.assign({},state,{data: List(state.data).set(action.index,action.updated).toArray()});
         
-        case DELETE_DATA:
+        case actions.DELETE_DATA:
             return Object.assign({},state,{data:List(state.data).delete(action.index).toArray()});
         
         default:
@@ -39,13 +30,13 @@ const dataReducer = (state=dataState,action) =>{
 
 const peopleReducer = (state=peopleState,action)=>{
     switch(action.type){
-        case FETCH_START:
+        case actions.FETCH_START:
             return Object.assign({},state,{loading:true});
 
-        case FETCH_DONE:
+        case actions.FETCH_DONE:
             return Object.assign({},state,{people:action.data ,loading:false});
 
-        case FETCH_ERROR:
+        case actions.FETCH_ERROR:
             return Object.assign({},state,{loading:false,error});
             
         default:

@@ -16,10 +16,10 @@ import * as Actions from '../redux/actions';
 
     componentDidMount() {
         this.props.FetchData();  // This gets data via Axios
-       // this.props.getData();  //This gets data from static file.
-       // this.props.addData({title:"asdfasdfasd",description:"sdfasdfadsafasdfnlas"})
-       // this.props.updateData(2,{title:"asdfasdfasd UPDATED",description:"sdfasdfadsafasdfnlas"})
-       // this.props.deleteData(1)
+        //this.props.getData();  //This gets data from static file.
+        //this.props.addData({title:"title",description:"description"})
+        //this.props.updateData(2,{title:"title UPDATED",description:"description"})
+        //this.props.deleteData(1)
     }
 
 render() {
@@ -57,7 +57,7 @@ render() {
 
     renderPeople({item, index}) {
         return (
-           
+        
         <TouchableOpacity style={styles.rowPeople} 
             onPress={()=>{
 
@@ -71,7 +71,7 @@ render() {
                     {item.email}
                 </Text>
             </View>
-           
+        
         </TouchableOpacity>
         )
     }
