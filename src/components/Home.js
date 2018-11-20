@@ -36,7 +36,7 @@ render() {
                         ref='listRef'
                         data={this.props.people} // use this.props.data for read from static file
                         renderItem={this.renderPeople}  //use this.renderItem for static file
-                        keyExtractor={(item, index) => index}/>
+                        keyExtractor={(item, index) => 'list-item-'+index}/>
                 </View>
             );
         }
@@ -71,7 +71,7 @@ render() {
                     {item.email}
                 </Text>
             </View>
-        
+            
         </TouchableOpacity>
         )
     }
