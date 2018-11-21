@@ -71,7 +71,7 @@ render() {
                     {item.email}
                 </Text>
             </View>
-        
+
         </TouchableOpacity>
         )
     }
