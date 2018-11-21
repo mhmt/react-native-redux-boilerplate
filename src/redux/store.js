@@ -6,4 +6,5 @@ import api from './middleware/api'
 import crashHandler from './middleware/crashHandler'
 
 const store = createStore(rootReducer,applyMiddleware(logger,crashHandler,api,thunk));
+
 export default store;
